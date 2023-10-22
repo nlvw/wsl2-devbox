@@ -1,0 +1,75 @@
+#!/usr/bin/env bash
+
+# Determine Architecture
+case $(uname -m) in
+    "x86_64"|"aarch64")
+        arch=$(uname -m)
+    ;;
+    "arm64")
+        arch="aarch64"
+    ;;
+    *)
+        echo "Unsupported cpu arch: $(uname -m)"
+        exit 2
+    ;;
+esac
+
+# Determine OS
+case $(uname -s) in
+    "Linux")
+        sys="linux"
+    ;;
+    "Darwin")
+        sys="macos"
+    ;;
+    *)
+        echo "Unsupported system: $(uname -s)"
+        exit 2
+    ;;
+esac
+
+# Set Release
+get_latest_release() {
+    curl --silent "https://api.github.com/repos/$1/releases/latest" \
+        | grep '"tag_name":' \
+        | sed -E 's/.*"([^"]+)".*/\1/'
+}
+rel="$(get_latest_release helix-editor/helix)"
+
+# Create Temp Directory
+temp="$(mktemp -d)"
+
+# Download
+url="https://github.com/helix-editor/helix/releases/download/$rel/helix-$rel-$arch-$sys.tar.xz"
+curl -s --location "$url" | tar -C "$temp" -xJ
+if [[ $? -ne 0 ]]
+then
+    echo
+    echo "Extracting binary failed, cannot launch zellij :("
+    echo "One probable cause is that a new release just happened and the binary is currently building."
+    echo "Maybe try again later? :)"
+    exit 1
+fi
+
+# Setup Destination
+dest="$HOME/.local/share/helix"
+if [ -d "$dest" ]; then
+	rm -rf "$dest"
+fi
+mkdir -p "$dest"
+
+# Copy Files
+/bin/cp -rf "$temp/helix-$rel-$arch-$sys"/* "$dest/"
+chmod 750 "$dest/hx"
+
+# Create Symlink
+if [ ! -d "$HOME/.local/bin" ]; then
+    mkdir -p "$HOME/.local/bin"
+fi
+ln -sf "$dest/hx" "$HOME/.local/bin/hx"
+
+# Cleanup Temp
+rm -rf "$temp"
+
+# Show Version
+"$HOME/.local/bin/hx" --version

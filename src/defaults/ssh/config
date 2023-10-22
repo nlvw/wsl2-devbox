@@ -1,0 +1,25 @@
+# ~/.ssh/config
+AddKeysToAgent yes
+IdentityFile ~/.ssh/id_ed25519
+
+TCPKeepAlive yes
+ServerAliveInterval 15
+ServerAliveCountMax 20
+
+#CanonicalizeHostname yes
+#CanonicalDomains example.com example.org
+#CanonicalizeMaxDots 1
+#CanonicalizeFallbackLocal yes
+
+Host github.com
+	HostName github.com
+	User git
+	IdentitiesOnly yes
+
+Host gitlab.com
+	HostName gitlab.com
+	User git
+	IdentitiesOnly yes
+
+#Host *.example.com *.example.org
+#	User jdoe

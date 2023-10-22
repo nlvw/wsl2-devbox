@@ -1,0 +1,60 @@
+#!/usr/bin/env bash
+
+# Determine Architecture
+case $(uname -m) in
+    "x86_64"|"aarch64")
+        arch=$(uname -m)
+    ;;
+    "arm64")
+        arch="aarch64"
+    ;;
+    *)
+        echo "Unsupported cpu arch: $(uname -m)"
+        exit 2
+    ;;
+esac
+
+# Determine OS
+case $(uname -s) in
+    "Linux")
+        sys="unknown-linux-musl"
+    ;;
+    "Darwin")
+        sys="apple-darwin"
+    ;;
+    *)
+        echo "Unsupported system: $(uname -s)"
+        exit 2
+    ;;
+esac
+
+# Create Temp Directory
+temp="$(mktemp -d)"
+
+# Download
+url="https://github.com/zellij-org/zellij/releases/latest/download/zellij-$arch-$sys.tar.gz"
+curl -s --location "$url" | tar -C "$temp" -xz
+if [[ $? -ne 0 ]]
+then
+    echo
+    echo "Extracting binary failed, cannot launch zellij :("
+    echo "One probable cause is that a new release just happened and the binary is currently building."
+    echo "Maybe try again later? :)"
+    exit 1
+fi
+
+# Setup Destination
+dest="$HOME/.local/bin"
+if [ ! -d "$dest" ]; then
+	mkdir -p "$dir"
+fi
+
+# Copy Binary
+cp -f "$temp/zellij" "$dest/zellij"
+chmod 750 "$dest/zellij"
+
+# Cleanup Temp
+rm -rf "$temp"
+
+# Show Version
+"$HOME/.local/bin/zellij" --version

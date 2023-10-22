@@ -1,0 +1,16 @@
+# https://learn.microsoft.com/en-us/windows/wsl/wsl-config#configuration-setting-for-wslconfig
+
+[wsl2]
+#memory=16G
+#processors=8
+#swap=4G
+#swapFile=C:\\temp\\wsl-swap.vhdx
+nestedVirtualization=true
+
+[experimental]
+autoMemoryReclaim=gradual
+sparseVhd=true
+networkingMode=mirrored
+dnsTunneling=true
+firewall=true
+autoProxy=true
