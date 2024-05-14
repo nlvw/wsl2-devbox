@@ -7,6 +7,7 @@
 #swapFile=C:\\temp\\wsl-swap.vhdx
 autoProxy=true
 dnsTunneling=true
+guiApplications=true
 nestedVirtualization=true
 networkingMode=mirrored
 
