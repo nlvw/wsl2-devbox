@@ -88,14 +88,8 @@ if ((Get-ExecutionPolicy) -ne "RemoteSigned") {
 	Set-ExecutionPolicy RemoteSigned
 }
 
-# Install or Upgrade Dev Tools
+# Install or Upgrade Dev Tools for VSCode and Container Workflows
 winget install --id 7zip.7zip --exact --disable-interactivity --accept-source-agreements --silent --force
 winget install --id Git.Git --exact --disable-interactivity --accept-source-agreements --silent --force
-winget install --id Microsoft.PowerToys --exact --disable-interactivity --accept-source-agreements --silent --force
-winget install --id Microsoft.Teams --exact --disable-interactivity --accept-source-agreements --silent --force
 winget install --id Microsoft.VisualStudioCode --exact --disable-interactivity --accept-source-agreements --silent --force
 winget install --id Microsoft.WindowsTerminal --exact --disable-interactivity --accept-source-agreements --silent --force
-winget install --id mRemoteNG.mRemoteNG --exact --disable-interactivity --accept-source-agreements --silent --force
-winget install --id Notepad++.Notepad++ --exact --disable-interactivity --accept-source-agreements --silent --force
-winget install --id PuTTY.PuTTY --exact --disable-interactivity --accept-source-agreements --silent --force
-winget install --id WinSCP.WinSCP --exact --disable-interactivity --accept-source-agreements --silent --force

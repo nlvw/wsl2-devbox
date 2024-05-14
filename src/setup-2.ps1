@@ -34,6 +34,9 @@ if (!(Test-Path "$env:USERPROFILE\.ssh")) {
 	Invoke-Call -ScriptBlock { icacls "$env:USERPROFILE\.ssh" /c /Remove:g "Authenticated Users" BUILTIN Everyone Users }
 }
 
+# config git to use openssh
+Invoke-Call -ScriptBlock { git config --global core.sshCommand "'C:\Windows\System32\OpenSSH\ssh.exe'" }
+
 # Update WSL
 Write-Host -ForegroundColor Green "Updating WSL!"
 Invoke-Call -ScriptBlock { wsl --update }
