@@ -25,6 +25,7 @@ param (
 		"dbuilder",
 		"fedora37",
 		"fedora38",
+		"fedora40",
 		"oracle8",
 		"oracle9",
 		"rhel8",
