@@ -5,12 +5,12 @@
 #processors=8
 #swap=4G
 #swapFile=C:\\temp\\wsl-swap.vhdx
+autoProxy=true
+dnsTunneling=true
 nestedVirtualization=true
+networkingMode=mirrored
 
 [experimental]
 autoMemoryReclaim=gradual
 sparseVhd=true
-networkingMode=mirrored
-dnsTunneling=true
-firewall=true
-autoProxy=true
+
